@@ -20,6 +20,6 @@
   "homepage": "https://gist.github.com/eecec0aa017363c47c287e86fd09cad3",
   "devDependencies": {
     "buble": "^0.15.1",
-    "cjs-wrap": "^1.1.0"
+    "cjs-wrap": "^1.1.1"
   }
 }
