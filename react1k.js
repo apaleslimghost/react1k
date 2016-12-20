@@ -7,7 +7,7 @@ let createNode = ({tagName, props, data}) =>
 let modifyElement = (el, host, index) => {
 	if(typeof el === 'string') return {tagName: '_string', data: el, children: []}
 	if(typeof el.tagName === 'function') {
-		let run = props => modifyElement(el.tagName(props, nextProps => render(run(Object.assign(el.props, nextProps)), host, index)));
+		let run = props => modifyElement(el.tagName(props, nextProps => render(run(Object.assign(el.props, nextProps)), host, index)), host, index);
 		return run(Object.assign({children: el.children}, el.props))
 	}
 }
