@@ -10,10 +10,11 @@ let modifyElement = (el, host, index) => {
 		let run = props => modifyElement(el.tagName(props, nextProps => render(run(Object.assign(el.props, nextProps)), host, index)), host, index);
 		return run(Object.assign({children: el.children}, el.props))
 	}
+	return el;
 }
 
 let render = exports.render = (el, host, index = 0) => {
-	el = modifyElement(el, host, index) || el
+	el = modifyElement(el, host, index)
 	let extantChild = host.childNodes[index]
 	let node = createNode(el)
 	el.children.forEach((child, i) => child && render(child, extantChild || node, i))
