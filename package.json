@@ -1,0 +1,25 @@
+{
+  "name": "@quarterto/react1k",
+  "version": "1.0.0",
+  "description": "",
+  "main": "react1k.js",
+  "browser": "dist.js",
+  "scripts": {
+    "prepublish": "buble react1k.js | cjs-wrap react1k"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gist.github.com/eecec0aa017363c47c287e86fd09cad3.git"
+  },
+  "keywords": [],
+  "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gist.github.com/eecec0aa017363c47c287e86fd09cad3"
+  },
+  "homepage": "https://gist.github.com/eecec0aa017363c47c287e86fd09cad3",
+  "devDependencies": {
+    "buble": "^0.15.1",
+    "cjs-wrap": "^1.0.0"
+  }
+}
