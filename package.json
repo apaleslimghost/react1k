@@ -5,7 +5,7 @@
   "main": "react1k.js",
   "browser": "dist.js",
   "scripts": {
-    "prepublish": "buble react1k.js | cjs-wrap react1k"
+    "prepublish": "buble react1k.js | cjs-wrap react1k > dist.js"
   },
   "repository": {
     "type": "git",
