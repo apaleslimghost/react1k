@@ -17,7 +17,7 @@ let modifyElement = (el, host, index) => {
 }
 
 let render = exports.render = (origEl, host, index = 0) => {
-	el = modifyElement(origEl, host, index)
+	let el = modifyElement(origEl, host, index)
 	let extantChild = host.childNodes[index]
 	let node = createNode(el)
 	if(origEl.tagName && origEl.tagName.willMount) origEl.tagName.willMount.call(origEl, node);
