@@ -5,7 +5,8 @@
   "main": "react1k.js",
   "browser": "dist.js",
   "scripts": {
-    "prepublish": "buble react1k.js | cjs-wrap react1k > dist.js"
+    "prepublish": "babel react1k.js | cjs-wrap react1k > dist.js",
+    "test": "mocha --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,17 @@
   },
   "homepage": "https://gist.github.com/eecec0aa017363c47c287e86fd09cad3",
   "devDependencies": {
-    "buble": "^0.15.1",
-    "cjs-wrap": "^1.1.1"
+    "@quarterto/promisify": "^1.0.0",
+    "babel-cli": "^6.24.0",
+    "babel-preset-es2017": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-register": "^6.24.0",
+    "chai": "^3.5.0",
+    "cjs-wrap": "^1.1.1",
+    "dirty-chai": "^1.2.2",
+    "jsdom": "^9.12.0",
+    "mocha": "^3.2.0",
+    "sinon": "^1.4.0",
+    "sinon-chai": "^2.8.0"
   }
 }
