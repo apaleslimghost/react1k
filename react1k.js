@@ -1,26 +1,20 @@
 exports.h = (tagName, props = {}, ...children) => ({tagName, props, children})
 
-const string = Symbol('string')
-
-let createNode = ({tagName, props, data}) =>
-	tagName === string ? document.createTextNode(data)
-	: Object.assign(document.createElement(tagName), props)
-
-let modifyElement = (el, host, index) => {
-	if(typeof el === 'string') return {tagName: string, data: el, children: []}
+let mount = (el, host, index) => {
+	if(typeof el === 'string') return document.createTextNode(el)
+	if(typeof el.tagName === 'string') return Object.assign(document.createElement(el.tagName), el.props)
 	if(typeof el.tagName === 'function') {
-		el.setProps = nextProps => render(run(Object.assign(el.props, nextProps)), host, index);
-		let run = props => modifyElement(el.tagName(props, el.setProps), host, index);
-		return run(Object.assign({children: el.children}, el.props))
+		el.setProps = nextProps => render(run(Object.assign(el.props, nextProps)), host, index)
+		let run = props => mount(el.tagName(props, el.setProps), host, index)
+		let node = run(Object.assign({children: el.children}, el.props))
+		if(el.tagName.willMount) el.tagName.willMount(el, node)
+		return node
 	}
-	return el;
 }
 
-let render = exports.render = (origEl, host, index = 0) => {
-	let el = modifyElement(origEl, host, index)
+let render = exports.render = (el, host, index = 0) => {
 	let extantChild = host.childNodes[index]
-	let node = createNode(el)
-	if(origEl.tagName && origEl.tagName.willMount) origEl.tagName.willMount.call(origEl, node);
+	let node = mount(el, host, index)
 	el.children.forEach((child, i) => child && render(child, extantChild || node, i))
 	if(!extantChild) return host.appendChild(node)
 	if(el.tagName.toUpperCase() === extantChild.tagName) return Object.assign(extantChild, el.props)

@@ -23,7 +23,8 @@ describe('react1k', () => {
 		Foo.willMount = spy();
 		Bar.willMount = spy();
 
-		render(<Bar />, document.querySelector('main'));
+		const main = document.querySelector('main');
+		render(<Bar />, main);
 
 		expect(Foo.willMount).to.have.been.called();
 		expect(Bar.willMount).to.have.been.called();
