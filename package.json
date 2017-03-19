@@ -20,6 +20,7 @@
   },
   "homepage": "https://gist.github.com/eecec0aa017363c47c287e86fd09cad3",
   "devDependencies": {
+    "@quarterto/chai-dom-equal": "^1.7.0",
     "@quarterto/promisify": "^1.0.0",
     "babel-cli": "^6.24.0",
     "babel-preset-es2017": "^6.22.0",
