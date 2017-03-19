@@ -1,11 +1,13 @@
 exports.h = (tagName, props = {}, ...children) => ({tagName, props, children})
 
+const string = Symbol('string')
+
 let createNode = ({tagName, props, data}) =>
-	tagName === '_string' ? document.createTextNode(data)
+	tagName === string ? document.createTextNode(data)
 	: Object.assign(document.createElement(tagName), props)
 
 let modifyElement = (el, host, index) => {
-	if(typeof el === 'string') return {tagName: '_string', data: el, children: []}
+	if(typeof el === 'string') return {tagName: string, data: el, children: []}
 	if(typeof el.tagName === 'function') {
 		el.setProps = nextProps => render(run(Object.assign(el.props, nextProps)), host, index);
 		let run = props => modifyElement(el.tagName(props, el.setProps), host, index);
