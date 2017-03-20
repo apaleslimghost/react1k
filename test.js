@@ -5,7 +5,7 @@ const {expect} = require('chai')
 	.use(require('@quarterto/chai-dom-equal'))
 	.use(require('dirty-chai'));
 
-const {spy} = require('sinon');
+const {spy, stub} = require('sinon');
 
 const promisify = require('@quarterto/promisify');
 const jsdom = promisify(require('jsdom').env);
@@ -45,7 +45,7 @@ describe('react1k', () => {
 			expect(main.innerHTML).dom.to.equal('<div><div>it</div><div>works</div></div>');
 		});
 
-		it('should do attributes ', () => {
+		it('should do attributes', () => {
 			render(<div id='bar'/>, main);
 			expect(main.innerHTML).dom.to.equal('<div id="bar"></div>');
 		});
@@ -64,16 +64,58 @@ describe('react1k', () => {
 		});
 	});
 
-	it('should call willMount on a parent of a direct child', () => {
-		const Foo = () => <div />;
-		const Bar = () => <Foo />;
+	describe('components', () => {
+		it('should render a basic component', () => {
+			const Foo = () => <div />;
 
-		Foo.willMount = spy();
-		Bar.willMount = spy();
+			render(<Foo />, main);
+			expect(main.innerHTML).dom.to.equal('<div></div>');
+		});
 
-		render(<Bar />, main);
+		it('should pass children as children', () => {
+			const Foo = stub().returns(<div/>)
+			const child = <div/>;
 
-		expect(Foo.willMount).to.have.been.called();
-		expect(Bar.willMount).to.have.been.called();
+			render(<Foo>{child}</Foo>, main);
+			expect(Foo).to.have.been.calledWithMatch({children: [child]});
+		});
+
+		it('should call willMount', () => {
+			const Foo = () => <div />;
+			Foo.willMount = spy();
+
+			render(<Foo />, main);
+			expect(Foo.willMount).to.have.been.called();
+		});
+
+		it('should expose setProps that rerenders with new props', () => {
+			const Foo = ({id}) => <div id={id}/>;
+			const el = <Foo id='bar' />;
+			render(el, main);
+			el.setProps({id: 'baz'})
+			expect(main.innerHTML).dom.to.equal('<div id="baz"></div>');
+		});
+
+		it('should pass setProps to component', () => {
+			let setProps;
+			const Foo = ({id}, sp) => (setProps = sp, <div id={id}/>);
+			const el = <Foo id='bar' />;
+			render(el, main);
+			setProps({id: 'baz'})
+			expect(main.innerHTML).dom.to.equal('<div id="baz"></div>');
+		});
+
+		it('should call willMount on a parent of a direct child', () => {
+			const Foo = () => <div />;
+			const Bar = () => <Foo />;
+
+			Foo.willMount = spy();
+			Bar.willMount = spy();
+
+			render(<Bar />, main);
+
+			expect(Foo.willMount).to.have.been.called();
+			expect(Bar.willMount).to.have.been.called();
+		});
 	});
 });
