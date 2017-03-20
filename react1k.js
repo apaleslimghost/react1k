@@ -18,5 +18,4 @@ let render = exports.render = (el, host, index = 0) => {
 	el.children && el.children.forEach((child, i) => child && render(child, extantChild || node, i))
 	if(!extantChild) return host.appendChild(node)
 	if(el.type.toUpperCase() === extantChild.tagName) return Object.assign(extantChild, el.props)
-	extantChild.replaceWith(node)
 }
