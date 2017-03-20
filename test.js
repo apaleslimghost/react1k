@@ -44,6 +44,13 @@ describe('react1k', () => {
 			render(<div><div>it</div><div>works</div></div>, main);
 			expect(main.innerHTML).dom.to.equal('<div><div>it</div><div>works</div></div>');
 		});
+
+		it('should preserve elements when rerendering if it looks the same', () => {
+			render(<div/>, main);
+			const div = document.querySelector('main > div');
+			render(<div/>, main);
+			expect(div).to.equal(document.querySelector('main > div'));
+		})
 	});
 
 	it('should call willMount on a parent of a direct child', () => {
