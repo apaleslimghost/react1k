@@ -24,24 +24,26 @@ describe('react1k', () => {
 		main.innerHTML = '';
 	});
 
-	it('should render basic elements', () => {
-		render(<div/>, main);
-		expect(main.innerHTML).dom.to.equal('<div></div>');
-	});
+	describe('basic rendering', () => {
+		it('should render basic elements', () => {
+			render(<div/>, main);
+			expect(main.innerHTML).dom.to.equal('<div></div>');
+		});
 
-	it('should render elements with text children', () => {
-		render(<div>it works</div>, main);
-		expect(main.innerHTML).dom.to.equal('<div>it works</div>');
-	});
+		it('should render elements with text children', () => {
+			render(<div>it works</div>, main);
+			expect(main.innerHTML).dom.to.equal('<div>it works</div>');
+		});
 
-	it('should render nested elements', () => {
-		render(<div><div>it works</div></div>, main);
-		expect(main.innerHTML).dom.to.equal('<div><div>it works</div></div>');
-	});
+		it('should render nested elements', () => {
+			render(<div><div>it works</div></div>, main);
+			expect(main.innerHTML).dom.to.equal('<div><div>it works</div></div>');
+		});
 
-	it('should render sibling elements', () => {
-		render(<div><div>it</div><div>works</div></div>, main);
-		expect(main.innerHTML).dom.to.equal('<div><div>it</div><div>works</div></div>');
+		it('should render sibling elements', () => {
+			render(<div><div>it</div><div>works</div></div>, main);
+			expect(main.innerHTML).dom.to.equal('<div><div>it</div><div>works</div></div>');
+		});
 	});
 
 	it('should call willMount on a parent of a direct child', () => {
