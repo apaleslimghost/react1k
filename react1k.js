@@ -15,7 +15,7 @@ let mount = (el, host, index) => {
 let render = exports.render = (el, host, index = 0) => {
 	let extantChild = host.childNodes[index]
 	let node = mount(el, host, index)
-	el.children && el.children.forEach((child, i) => child && render(child, extantChild || node, i))
+	if(el.children) el.children.forEach((child, i) => child && render(child, extantChild || node, i))
 	if(!extantChild) return host.appendChild(node)
 	if(el.type.toUpperCase() === extantChild.tagName) return Object.assign(extantChild, el.props)
 }
