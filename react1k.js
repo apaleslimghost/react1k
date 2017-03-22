@@ -13,10 +13,10 @@ let mount = (el, host, index) => {
 }
 
 let render = exports.render = (el, host, index = 0) => {
-	let extantChild = host.childNodes[index]
+	let current = host.childNodes[index]
 	let node = mount(el, host, index)
-	if(el.children) el.children.forEach((child, i) => child && render(child, extantChild || node, i))
-	if(!extantChild) return host.appendChild(node)
-	if(el.type === extantChild.tagName.toLowerCase()) return Object.assign(extantChild, el.props)
-	host.replaceChild(node, extantChild)
+	if(el.children) el.children.forEach((child, i) => child && render(child, current || node, i))
+	if(!current) return host.appendChild(node)
+	if(el.type === current.tagName.toLowerCase()) return Object.assign(current, el.props)
+	host.replaceChild(node, current)
 }
