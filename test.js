@@ -88,6 +88,15 @@ describe('react1k', () => {
 			expect(Foo.willMount).to.have.been.called();
 		});
 
+		it('should call ref', () => {
+			const Foo = ({divRef}) => <div ref={divRef} />;
+			const ref = spy();
+
+			render(<Foo divRef={ref} />, main);
+			expect(ref).to.have.been.called();
+			expect(ref.lastCall.args[0]).to.have.property('tagName', 'DIV');
+		});
+
 		it('should expose setProps that rerenders with new props', () => {
 			const Foo = ({id}) => <div id={id}/>;
 			const el = <Foo id='bar' />;

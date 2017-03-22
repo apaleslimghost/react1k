@@ -1,8 +1,12 @@
-exports.h = (type, props = {}, ...children) => ({type, props, children})
+exports.h = (type, props, ...children) => ({type, props: props || {}, children})
 
 let mount = (el, host, index) => {
 	if(typeof el === 'string') return document.createTextNode(el)
-	if(typeof el.type === 'string') return Object.assign(document.createElement(el.type), el.props)
+	if(typeof el.type === 'string') {
+		let node = Object.assign(document.createElement(el.type), el.props)
+		if(el.props.ref) el.props.ref(node)
+		return node
+	}
 	if(typeof el.type === 'function') {
 		el.setProps = nextProps => render(Object.assign(el, {props: Object.assign(el.props, nextProps)}), host, index)
 		let props = Object.assign({children: el.children}, el.props)
